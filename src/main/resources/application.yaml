@@ -1,0 +1,24 @@
+spring:
+  profiles:
+    active: dev
+  application:
+    name: mergedcatalog
+csvfilebase:
+  input: inputcsv
+  output:
+
+#  datasource:
+#    url: jdbc:postgresql://localhost:5432/mergedcatalogdb
+#    username: postgres
+#    password: mysecretpassword
+#    driver-class-name: org.postgresql.Driver
+#  jpa:
+#    database-platform: org.hibernate.dialect.PostgreSQLDialect
+#    show-sql: true
+#    hibernate:
+#      ddl-auto: update
+#  liquibase:
+#    dropFirst: true
+#    clearCheckSums: true
+#    change-log: classpath:/db/changelog/db.changelog-master.yaml
+

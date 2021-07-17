@@ -6,11 +6,13 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class FinalCatalog {
+public class ProductDto {
+    private static final long serialVersionUID = 1L;
     @CsvBindByName
     private String sku;
     @CsvBindByName
-    private String sourceCatalog;
-    @CsvBindByName
     private String description ;
+    @CsvBindByName
+    private String source;
+
 }
