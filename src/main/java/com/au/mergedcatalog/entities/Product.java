@@ -17,10 +17,10 @@ public class Product {
     private String description ;
     @CsvBindByName
     private String source;
-    //    @javax.persistence.Id
+//    @javax.persistence.Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
 //    @Column(name = "id")
-//    private Long Id;
+    private Long Id;
     private String supplierId;
     private String barcode;
    
