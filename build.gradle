@@ -34,6 +34,9 @@ dependencies {
 	implementation group: 'org.apache.commons', name: 'commons-csv', version: '1.5'
 	implementation group: 'com.opencsv', name: 'opencsv', version: '5.4'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	// https://mvnrepository.com/artifact/org.projectlombok/lombok-mapstruct-binding
+	implementation group: 'org.projectlombok', name: 'lombok-mapstruct-binding', version: '0.1.0'
+
 }
 
 test {

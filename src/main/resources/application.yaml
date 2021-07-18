@@ -5,7 +5,7 @@ spring:
     name: mergedcatalog
 csvfilebase:
   input: inputcsv
-  output: outputcsv
+  output: /Users/oathkeeper/DEV/mergedcatalog/src/main/resources/outputcsv
 
 #  datasource:
 #    url: jdbc:postgresql://localhost:5432/mergedcatalogdb

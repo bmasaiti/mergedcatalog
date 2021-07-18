@@ -6,6 +6,7 @@ import com.au.mergedcatalog.entities.ProductDto;
 import com.au.mergedcatalog.fileprocessor.CatalogFileProcessor;
 import com.au.mergedcatalog.fileprocessor.CatalogHelper;
 import com.au.mergedcatalog.mappers.MapStructMapper;
+import com.au.mergedcatalog.repository.CombinedCatalogRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,13 +22,13 @@ public class CatalogServiceImpl implements CatalogService {
 
     private final CatalogHelper catalogHelper;
     private final MapStructMapper mapper;
-    //private final CombinedCatalogRepository combinedCatalogRepository;
+    private final CombinedCatalogRepository combinedCatalogRepository;
     @Value("${csvfilebase.output}")
     String basepath;
 
     @Override
     public List buildFinalCatalog() {
-         String outputFilePath = basepath+"FinalCatalog.csv" ;
+         String outputFilePath = basepath+"/FinalCatalog.csv" ;
         List<Product> enrichedCatalogA = catalogHelper.enrichProduct(Company.A);
         List<Product> enrichedCatalogB = catalogHelper.enrichProduct(Company.B);
 
@@ -51,7 +52,7 @@ public class CatalogServiceImpl implements CatalogService {
     }
 
     private void writeFinalCatalogToDb(List<Product> finalProductCatalog) {
-    //    combinedCatalogRepository.saveAll(finalProductCatalog);
+        combinedCatalogRepository.saveAll(finalProductCatalog);
     }
 
 
