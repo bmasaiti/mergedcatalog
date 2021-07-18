@@ -10,7 +10,6 @@ import java.io.Serializable;
 
 @Mapper( componentModel = "spring")
 public interface MapStructMapper extends Serializable {
-   // @Mapping(target = "author", ignore = true)
     @Mappings({
             @Mapping(target="sku", source="product.sku"),
             @Mapping(target="description", source="product.description"),

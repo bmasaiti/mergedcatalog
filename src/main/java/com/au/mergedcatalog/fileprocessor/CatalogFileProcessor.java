@@ -11,6 +11,7 @@ import com.opencsv.exceptions.CsvDataTypeMismatchException;
 import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import org.yaml.snakeyaml.reader.StreamReader;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -23,29 +24,32 @@ public class CatalogFileProcessor{
     private CatalogFileProcessor() {
     }
 
-    public static List csvToBeanConverter(Object objectType ,String inputFile) {
+    public static List getListOfObjectsFromCsvFile(Object objectType , String inputFile) {
         List<Object> inputList = new ArrayList<>();
         try {
         if (inputFile == null) {
             throw new IOException("No file uploaded!");
         }
             ClassLoader classLoader = CatalogFileProcessor.class.getClassLoader();
-        var streamReader = new InputStreamReader(classLoader.getResourceAsStream(inputFile));
-         inputList = new CsvToBeanBuilder(streamReader)
-                .withIgnoreLeadingWhiteSpace(true)
-                .withType(objectType.getClass())
-               // .withFieldAsNull(CSVReaderNullFieldIndicator.valueOf("sourceCatalog"))
-                .build()
-                .parse();
-    }catch(IOException e){             
+            try (var streamReader = new InputStreamReader(classLoader.getResourceAsStream(inputFile))) {
+                inputList = new CsvToBeanBuilder(streamReader)
+                        .withIgnoreLeadingWhiteSpace(true)
+                        .withType(objectType.getClass())
+                        .build()
+                        .parse();
+            }
+        }catch(IOException e){
         log.error("Failed to read inputfile", e.getCause());
     }
      return inputList;
     }
 
-    public static void beanToCsvConverter(List<ProductDto> productDto, File fileName){
+    public static void writeCombinedCatalogToCsVFile(List<ProductDto> productDto, String fileName){
         try {
-            Writer writer = new FileWriter(fileName);
+           // ClassLoader classLoader = CatalogFileProcessor.class.getClassLoader();
+          //  var streamReader = new OutputStreamWriter(classLoader.getResourceAsStream(fileName)) ;
+           // var out =new FileOutputStream(fileName);
+            Writer writer = new OutputStreamWriter(new FileOutputStream(fileName));
             HeaderColumnNameMappingStrategy<ProductDto> strategy = new HeaderColumnNameMappingStrategy<>();
             strategy.setType(ProductDto.class);
             log.info("Writing final catalog to file {}", fileName.toString());
@@ -70,10 +74,3 @@ public class CatalogFileProcessor{
     }
 
 }
-
-//
-//try (InputStream inputStream = getClass().getResourceAsStream("/input.txt");
-//        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
-//        String contents = reader.lines()
-//        .collect(Collectors.joining(System.lineSeparator()));
-//        }

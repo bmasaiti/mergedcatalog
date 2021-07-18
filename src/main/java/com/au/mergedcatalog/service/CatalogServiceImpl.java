@@ -1,5 +1,6 @@
 package com.au.mergedcatalog.service;
 
+import com.au.mergedcatalog.entities.Company;
 import com.au.mergedcatalog.entities.Product;
 import com.au.mergedcatalog.entities.ProductDto;
 import com.au.mergedcatalog.fileprocessor.CatalogFileProcessor;
@@ -10,7 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
 import java.util.*;
 
 
@@ -21,12 +21,13 @@ public class CatalogServiceImpl implements CatalogService {
 
     private final CatalogHelper catalogHelper;
     private final MapStructMapper mapper;
+    //private final CombinedCatalogRepository combinedCatalogRepository;
     @Value("${csvfilebase.output}")
     String basepath;
 
     @Override
     public List buildFinalCatalog() {
-         File outputFilePath = new File(basepath+"buildFinalCatalog.csv") ;
+         String outputFilePath = basepath+"FinalCatalog.csv" ;
         List<Product> enrichedCatalogA = catalogHelper.enrichProduct(Company.A);
         List<Product> enrichedCatalogB = catalogHelper.enrichProduct(Company.B);
 
@@ -35,6 +36,7 @@ public class CatalogServiceImpl implements CatalogService {
         finalCat.addAll(enrichedCatalogB);
            List<Product> finalProductCatalog = new ArrayList<>(finalCat);
            List<ProductDto>  productDtoList  = new ArrayList<>();
+           writeFinalCatalogToDb(finalProductCatalog);
 
         for (var item:
                 finalProductCatalog) {
@@ -43,9 +45,13 @@ public class CatalogServiceImpl implements CatalogService {
 
         }
 
-        CatalogFileProcessor.beanToCsvConverter(productDtoList,outputFilePath);
+        CatalogFileProcessor.writeCombinedCatalogToCsVFile(productDtoList,outputFilePath);
          log.info(productDtoList.toString());
         return productDtoList;
+    }
+
+    private void writeFinalCatalogToDb(List<Product> finalProductCatalog) {
+    //    combinedCatalogRepository.saveAll(finalProductCatalog);
     }
 
 
