@@ -6,19 +6,23 @@ import com.au.mergedcatalog.entities.Company;
 import com.au.mergedcatalog.entities.Product;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class CatalogHelperTest {
 
+    @Mock
+    CatalogFileProcessor catalogFileProcessor;
+    @InjectMocks
     CatalogHelper catalogHelper;
 
     @Test
@@ -28,8 +32,8 @@ public class CatalogHelperTest {
         List<Barcode> barcodelist = new ArrayList<>();
         barcodelist.add(TestDataSupport.getBarcodes());
 
-        when(CatalogFileProcessor.getListOfObjectsFromCsvFile(Product.class,"")).thenReturn(products);
-        when(CatalogFileProcessor.getListOfObjectsFromCsvFile(Barcode.class, "")).thenReturn(barcodelist);
+        when(catalogFileProcessor.getListOfObjectsFromCsvFile(any(Product.class),anyString())).thenReturn(products);
+        when(catalogFileProcessor.getListOfObjectsFromCsvFile(any(Barcode.class), anyString())).thenReturn(barcodelist);
 
         List<Product> enrichedProducts = catalogHelper.enrichProduct(Company.A);
 

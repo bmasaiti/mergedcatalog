@@ -11,7 +11,7 @@ public class TestDataSupport {
         Barcode barcode = new Barcode();
         barcode.setBarcode("z2783613083817");
         barcode.setSku("647-vyk-317");
-        barcode.setSupplierId(" 00001");
+        barcode.setSupplierId("00001");
         return barcode;
     }
 

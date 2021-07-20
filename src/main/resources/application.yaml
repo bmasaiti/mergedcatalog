@@ -4,21 +4,21 @@ spring:
   application:
     name: mergedcatalog
 csvfilebase:
-  input: inputcsv
+  input: /Users/oathkeeper/DEV/mergedcatalog/src/main/resources/inputcsv
   output: /Users/oathkeeper/DEV/mergedcatalog/src/main/resources/outputcsv
 
-#  datasource:
-#    url: jdbc:postgresql://localhost:5432/mergedcatalogdb
-#    username: postgres
-#    password: mysecretpassword
-#    driver-class-name: org.postgresql.Driver
-#  jpa:
-#    database-platform: org.hibernate.dialect.PostgreSQLDialect
-#    show-sql: true
-#    hibernate:
-#      ddl-auto: update
-#  liquibase:
-#    dropFirst: true
-#    clearCheckSums: true
-#    change-log: classpath:/db/changelog/db.changelog-master.yaml
+  datasource:
+    url: jdbc:postgresql://localhost:5432/mergedcatalogdb
+    username: postgres
+    password: mysecretpassword
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+  liquibase:
+    dropFirst: true
+    clearCheckSums: true
+    change-log: classpath:/db/changelog/db.changelog-master.yaml
 

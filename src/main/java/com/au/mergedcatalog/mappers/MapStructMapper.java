@@ -10,9 +10,9 @@ import java.io.Serializable;
 
 @Mapper( componentModel = "spring")
 public interface MapStructMapper extends Serializable {
-    @Mappings({
-            @Mapping(target="sku", source="product.sku"),
-            @Mapping(target="description", source="product.description"),
-            @Mapping(target="source", source="product.source")  })
+//    @Mappings({
+//            @Mapping(target="sku", source="product.sku"),
+//            @Mapping(target="description", source="product.description"),
+//            @Mapping(target="source", source="product.source")  })
     ProductDto productToProductDto(Product product) ;
 }
